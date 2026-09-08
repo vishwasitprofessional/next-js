@@ -1,1 +1,472 @@
 npx create-next-app@latest 
+npm install mysql2
+npm install bcryptjs
+npm install jose        //for json web token(JWT)
+
+users table:
+CREATE TABLE users (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    phone VARCHAR(20) DEFAULT NULL,
+    password VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL DEFAULT 'user',
+    status TINYINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `type`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', 'admin@dummy.com', '9999999999', '$2b$10$daDm0qjo7QLffg/m4kwzjOil/redSRwJkcADJWxJQXNcWLe0Y8lh2', 'user', 1, '2026-09-08 07:47:19', '2026-09-08 07:47:19'),
+(2, 'User', 'user@dummy.com', '9999999999', '$2b$10$qzcze/I7MZp0tnN0MZzid.WSd/bWyGtJYpXm/JgQex6jXX19p5xES', 'user', 1, '2026-09-08 07:47:31', '2026-09-08 07:47:31');
+
+
+.env.local
+------------------------------------
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=user_crud
+DB_PORT=3306
+
+src/config/db.ts
+-------------------------------------
+import mysql from "mysql2/promise";
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT || 3306),
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
+export default pool;
+
+src/types/user.ts
+-------------------------------------
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string | null;
+  password?: string;
+  type: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CreateUserRequest {
+  name: string;
+  email: string;
+  phone?: string;
+  password: string;
+  type?: string;
+  status?: number;
+}
+
+export interface UpdateUserRequest {
+  name: string;
+  email: string;
+  phone?: string;
+  password?: string;
+  type?: string;
+  status?: number;
+}
+
+Users API — GET and POST
+src/app/api/users/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db";
+import {
+  CreateUserRequest,
+} from "@/types/user";
+
+// GET /api/users
+export async function GET() {
+  try {
+    const [rows] = await pool.execute(`
+      SELECT
+        id,
+        name,
+        email,
+        phone,
+        type,
+        status,
+        created_at,
+        updated_at
+      FROM users
+      ORDER BY id DESC
+    `);
+
+    return NextResponse.json({
+      success: true,
+      data: rows,
+    });
+  } catch (error) {
+    console.error("GET USERS ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to fetch users",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+// POST /api/users
+export async function POST(request: NextRequest) {
+  try {
+    const body: CreateUserRequest = await request.json();
+
+    const {
+      name,
+      email,
+      phone,
+      password,
+      type = "user",
+      status = 1,
+    } = body;
+
+    // Validation
+    if (!name || !email || !password) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Name, email and password are required",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    // Check duplicate email
+    const [existingUsers] = await pool.execute(
+      "SELECT id FROM users WHERE email = ?",
+      [email]
+    );
+
+    if (Array.isArray(existingUsers) && existingUsers.length > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email already exists",
+        },
+        {
+          status: 409,
+        }
+      );
+    }
+
+    const [result]: any = await pool.execute(
+      `
+        INSERT INTO users
+        (
+          name,
+          email,
+          phone,
+          password,
+          type,
+          status
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+      `,
+      [
+        name,
+        email,
+        phone || null,
+        password,
+        type,
+        status,
+      ]
+    );
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "User created successfully",
+        id: result.insertId,
+      },
+      {
+        status: 201,
+      }
+    );
+  } catch (error) {
+    console.error("CREATE USER ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to create user",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+
+
+
+Single user API — GET, PUT, DELETE
+
+src/app/api/users/[id]/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db";
+import { UpdateUserRequest } from "@/types/user";
+
+// GET /api/users/1
+export async function GET(
+  request: NextRequest,
+  context: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  try {
+    const { id } = await context.params;
+
+    const [rows]: any = await pool.execute(
+      `
+        SELECT
+          id,
+          name,
+          email,
+          phone,
+          type,
+          status,
+          created_at,
+          updated_at
+        FROM users
+        WHERE id = ?
+      `,
+      [id]
+    );
+
+    if (rows.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "User not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: rows[0],
+    });
+  } catch (error) {
+    console.error("GET USER ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to fetch user",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+// PUT /api/users/1
+export async function PUT(
+  request: NextRequest,
+  context: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  try {
+    const { id } = await context.params;
+
+    const body: UpdateUserRequest = await request.json();
+
+    const {
+      name,
+      email,
+      phone,
+      password,
+      type = "user",
+      status = 1,
+    } = body;
+
+    if (!name || !email) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Name and email are required",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    // Check user
+    const [users]: any = await pool.execute(
+      "SELECT id FROM users WHERE id = ?",
+      [id]
+    );
+
+    if (users.length === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "User not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    // Check duplicate email
+    const [emailUsers]: any = await pool.execute(
+      `
+        SELECT id
+        FROM users
+        WHERE email = ?
+        AND id != ?
+      `,
+      [email, id]
+    );
+
+    if (emailUsers.length > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email already exists",
+        },
+        {
+          status: 409,
+        }
+      );
+    }
+
+    if (password) {
+      await pool.execute(
+        `
+          UPDATE users
+          SET
+            name = ?,
+            email = ?,
+            phone = ?,
+            password = ?,
+            type = ?,
+            status = ?
+          WHERE id = ?
+        `,
+        [
+          name,
+          email,
+          phone || null,
+          password,
+          type,
+          status,
+          id,
+        ]
+      );
+    } else {
+      await pool.execute(
+        `
+          UPDATE users
+          SET
+            name = ?,
+            email = ?,
+            phone = ?,
+            type = ?,
+            status = ?
+          WHERE id = ?
+        `,
+        [
+          name,
+          email,
+          phone || null,
+          type,
+          status,
+          id,
+        ]
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    console.error("UPDATE USER ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to update user",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+// DELETE /api/users/1
+export async function DELETE(
+  request: NextRequest,
+  context: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  try {
+    const { id } = await context.params;
+
+    const [result]: any = await pool.execute(
+      "DELETE FROM users WHERE id = ?",
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "User not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    console.error("DELETE USER ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to delete user",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
