@@ -2,6 +2,7 @@ npx create-next-app@latest
 npm install mysql2
 npm install bcryptjs
 npm install jose        //for json web token(JWT)
+npm install lucide-react
 
 users table:
 CREATE TABLE users (
