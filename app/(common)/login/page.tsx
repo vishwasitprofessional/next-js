@@ -1,10 +1,30 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { FormEvent, Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<main className="flex min-h-screen items-center justify-center">Loading login...</main>}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+const googleErrors: Record<string, string> = {
+  configuration: "Google sign-in is not configured yet. Please contact the administrator.",
+  session: "Your sign-in session expired. Please try again.",
+  cancelled: "Google sign-in was cancelled. Please try again.",
+  failed: "Google sign-in failed. Please try again.",
+  email: "Please use a Gmail or Google Workspace account, or sign in with your password.",
+  account: "No matching account is available. Please contact the administrator.",
+  inactive: "Your account is inactive. Please contact the administrator.",
+};
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const googleError = googleErrors[searchParams.get("google_error") || ""] || "";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +57,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.push(result.user.type+"/dashboard");
+      router.push("/" + result.user.type + "/dashboard");
       // Login successful
 
     } catch (error) {
@@ -69,9 +89,9 @@ export default function LoginPage() {
         <div className="rounded-2xl bg-white p-6 shadow-xl md:p-8">
           <form onSubmit={handleLogin}>
             {/* Error */}
-            {error && (
-              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-                {error}
+            {(error || googleError) && (
+              <div role="alert" className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+                {error || googleError}
               </div>
             )}
 
@@ -123,7 +143,22 @@ export default function LoginPage() {
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
+          <div className="my-6 flex items-center gap-3 text-xs text-slate-400">
+            <div className="h-px flex-1 bg-slate-200" />
+            <span>or</span>
+            <div className="h-px flex-1 bg-slate-200" />
+          </div>
+          <a
+            href="/api/auth/google"
+            className="flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          >
+            Sign in with Google
+          </a>
         </div>
+
+        <p className="mt-6 text-center text-sm text-slate-600">
+          Don&apos;t have an account? <a href="/signup" className="font-semibold text-blue-600 hover:underline">Create account</a>
+        </p>
 
         {/* Footer */}
         <p className="mt-6 text-center text-xs text-slate-400">

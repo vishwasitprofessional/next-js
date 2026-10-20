@@ -1,13 +1,21 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { FormEvent, Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import bcrypt from "bcryptjs";
+
 
 
 export default function SignupPage() {
+  return <Suspense fallback={<main>Loading registration...</main>}><SignupForm /></Suspense>;
+}
+
+function SignupForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const googleError = searchParams.has("google_error")
+    ? "Google signup could not be completed. Try again, or register with email and password. Existing inactive accounts must be reactivated by an administrator."
+    : "";
 
   const [form, setForm] = useState({
     name: "",
@@ -52,8 +60,7 @@ export default function SignupPage() {
 
     try {
       setLoading(true);
-        const hashedPassword = await bcrypt.hash(form.password, 10);
-      const response = await fetch("/api/users", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,11 +69,8 @@ export default function SignupPage() {
           name: form.name,
           email: form.email,
           phone: form.phone,
-          password: hashedPassword,
+          password: form.password,
 
-          // Normal users signing up from the website
-          type: "user",
-          status: 1,
         }),
       });
 
@@ -123,9 +127,9 @@ export default function SignupPage() {
           <form onSubmit={handleSignup}>
 
             {/* Error */}
-            {error && (
+            {(error || googleError) && (
               <div className="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-                {error}
+                {error || googleError}
               </div>
             )}
 
@@ -265,6 +269,11 @@ export default function SignupPage() {
             </button>
 
           </form>
+
+          <div className="my-6 text-center text-sm text-slate-400">or</div>
+          <a href="/api/auth/google?mode=signup" className="flex w-full items-center justify-center rounded-lg border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+            Sign up with Google
+          </a>
 
           {/* Login */}
           <div className="mt-6 border-t border-slate-100 pt-6 text-center">
