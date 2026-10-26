@@ -1,0 +1,3 @@
+.settings-navigation-item { color: #10182b; }
+.settings-navigation-active { position: relative; background: #dff0fd; color: #008fe3; }
+.settings-navigation-active::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; border-radius: 0 12px 12px 0; background: #009cf2; }
