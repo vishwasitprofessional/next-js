@@ -40,6 +40,24 @@ function Dashboard() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [usersOpen, setUsersOpen] = useState(false);
 
+  const handleLogout = async () => {
+    setProfileOpen(false);
+
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "same-origin",
+      });
+
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+
+      window.location.replace("/login");
+    } catch {
+      window.alert("Unable to log out. Please try again.");
+    }
+  };
   return (
     <div className="min-h-screen bg-[#070914] text-slate-200">
 
@@ -939,12 +957,7 @@ function Dashboard() {
 
                         <button
                           type="button"
-                          onClick={() => {
-                            setProfileOpen(false);
-
-                            // Add your logout API here
-                            console.log("Logout clicked");
-                          }}
+                          onClick={handleLogout}
                           className="
               w-full
               flex
