@@ -6,6 +6,7 @@ export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
   const mode = request.nextUrl.searchParams.get("mode") === "signup" ? "signup" : "login";
+  const rememberMe = request.nextUrl.searchParams.get("rememberMe") === "true";
   let config;
   try {
     config = googleConfig();
@@ -29,7 +30,7 @@ export async function GET(request: NextRequest) {
   }).toString();
   const response = NextResponse.redirect(url);
   response.headers.set("Cache-Control", "no-store");
-  response.cookies.set(googleCookie, JSON.stringify({ state, nonce, verifier, mode, expires: Date.now() + 600_000 }), {
+  response.cookies.set(googleCookie, JSON.stringify({ state, nonce, verifier, mode, rememberMe, expires: Date.now() + 600_000 }), {
     ...googleCookieOptions,
     maxAge: 600,
   });

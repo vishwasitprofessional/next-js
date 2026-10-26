@@ -14,7 +14,11 @@ export interface AuthUser {
   type: string;
 }
 
-export async function createToken(user: AuthUser) {
+export function getSessionMaxAge(rememberMe: boolean = false) {
+  return 60 * 60 * 24 * (rememberMe ? 7 : 1);
+}
+
+export async function createToken(user: AuthUser, rememberMe: boolean = false) {
   return await new SignJWT({
     id: user.id,
     email: user.email,
@@ -24,7 +28,7 @@ export async function createToken(user: AuthUser) {
       alg: "HS256",
     })
     .setIssuedAt()
-    .setExpirationTime("1d")
+    .setExpirationTime(Math.floor(Date.now() / 1000) + getSessionMaxAge(rememberMe))
     .sign(secretKey);
 }
 

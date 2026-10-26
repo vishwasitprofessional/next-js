@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import pool from "@/app/config/db";
-import { createToken } from "@/app/lib/auth";
+import { createToken, getSessionMaxAge } from "@/app/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
     const { email, password } = body;
+    const rememberMe = body.rememberMe === true;
 
     if (!email || !password) {
       return NextResponse.json(
@@ -77,7 +78,7 @@ export async function POST(request: NextRequest) {
       id: user.id,
       email: user.email,
       type: user.type,
-    });
+    }, rememberMe);
 
     const response = NextResponse.json({
       success: true,
@@ -96,7 +97,7 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: process.env.NEXT_PUBLIC_SUB_FOLDER || "/",
-      maxAge: 60 * 60 * 24 * 1,
+      maxAge: getSessionMaxAge(rememberMe),
     });
 
     return response;

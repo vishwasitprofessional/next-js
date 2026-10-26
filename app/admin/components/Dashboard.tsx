@@ -32,10 +32,7 @@ import {
   CreditCard,
 } from "lucide-react";
 
-
 function Dashboard() {
-
-  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [usersOpen, setUsersOpen] = useState(false);
@@ -60,7 +57,6 @@ function Dashboard() {
   };
   return (
     <div className="min-h-screen bg-[#070914] text-slate-200">
-
       {/* =====================================================
           MOBILE OVERLAY
       ====================================================== */}
@@ -77,99 +73,38 @@ function Dashboard() {
       ====================================================== */}
 
       <aside
-        className={`
-          fixed
-          z-50
-          left-0
-          top-0
-          bottom-0
-          w-[270px]
-          bg-[#090b17]
-          border-r
-          border-slate-800/70
-          flex
-          flex-col
-          transition-transform
-          duration-300
-          lg:translate-x-0
-          ${sidebarOpen
-            ? "translate-x-0"
-            : "-translate-x-full"
-          }
+        className={`fixed      z-50      left-0      top-0      bottom-0      w-[270px]      bg-[#090b17]      border-r      border-slate-800/70      flex      flex-col      transition-transfor       duration-300      lg:translate-x-0      ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-
         {/* Logo */}
 
         <div className="h-[80px] px-6 flex items-center border-b border-slate-800/70">
-
           <div className="relative mr-3">
-
             <div
-              className="
-                w-11
-                h-11
-                rounded-xl
-                bg-gradient-to-br
-                from-violet-600
-                to-blue-600
-                flex
-                items-center
-                justify-center
-                shadow-[0_0_30px_rgba(124,58,237,.35)]
-              "
+              className="      w-11      h-11      rounded-xl      bg-gradient-to-br      from-violet-600      to-blue-600      flex      items-center      justify-center      shadow-[0_0_30px_rgba(124,58,237,.35)]"
             >
-              <span className="text-white text-xl font-black">
-                C
-              </span>
+              <span className="text-white text-xl font-black">C</span>
             </div>
 
             <div
-              className="
-                absolute
-                -right-1
-                -bottom-1
-                w-3
-                h-3
-                rounded-full
-                bg-emerald-400
-                border-2
-                border-[#090b17]
-              "
+              className="    absolute    -right-1    -bottom-1    w-3    h-3    rounded-full    bg-emerald-400    border-2    border-[#090b17]  "
             />
-
           </div>
 
           <div>
-            <h1 className="font-bold text-lg text-white">
-              CypherTech
-            </h1>
+            <h1 className="font-bold text-lg text-white">CypherTech</h1>
 
-            <p className="text-xs text-slate-400">
-              Admin Panel
-            </p>
+            <p className="text-xs text-slate-400">Admin Panel</p>
           </div>
-
         </div>
-
 
         {/* Navigation */}
 
         <nav
-          className="
-    flex-1
-    px-4
-    py-6
-    overflow-y-auto
-    overflow-x-hidden
-    custom-scrollbar
-  "
-        >
-
+          className=" flex-1 px-4 py-6 overflow-y-auto overflow-x-hidden custom-scrollbar">
           <p className="px-3 mb-3 text-[11px] uppercase tracking-widest text-slate-500">
             Main Menu
           </p>
-
 
           {/* Dashboard */}
 
@@ -179,52 +114,27 @@ function Dashboard() {
             active
           />
 
-
           {/* =====================================================
     USERS MENU
 ===================================================== */}
 
           <div>
-
             {/* Users Main Button */}
 
             <button
               type="button"
               onClick={() => setUsersOpen(!usersOpen)}
-              className={`
-      w-full
-      flex
-      items-center
-      justify-between
-      px-4
-      py-3
-      rounded-xl
-      mb-1
-      transition-all
-      duration-200
-      ${usersOpen
-                  ? "bg-violet-500/10 text-white"
-                  : "text-slate-400 hover:bg-violet-500/10 hover:text-white"
-                }
-    `}
+              className={`w-full  flex  items-center  justify-between  px-4  py-3  rounded-xl  mb-1  transition-all  duration-200  ${  usersOpen ? "bg-violet-500/10 text-white" : "text-slate-400 hover:bg-violet-500/10 hover:text-white"} `}
             >
-
               <div className="flex items-center gap-3">
-
                 <Users
                   size={19}
-                  className={`
-          transition-colors
-          ${usersOpen ? "text-violet-400" : ""}
+                  className={` transition-colors ${usersOpen ? "text-violet-400" : ""}
         `}
                 />
 
-                <span className="text-sm">
-                  Users
-                </span>
-
+                <span className="text-sm">Users</span>
               </div>
-
 
               {/* Arrow */}
 
@@ -237,9 +147,7 @@ function Dashboard() {
         ${usersOpen ? "rotate-90 text-violet-400" : ""}
       `}
               />
-
             </button>
-
 
             {/* =================================================
       USERS SUB MENU
@@ -255,7 +163,6 @@ function Dashboard() {
         border-violet-500/20
       "
               >
-
                 {/* All Users */}
 
                 <a
@@ -275,7 +182,6 @@ function Dashboard() {
           transition
         "
                 >
-
                   <Users
                     size={16}
                     className="
@@ -284,12 +190,8 @@ function Dashboard() {
           "
                   />
 
-                  <span>
-                    All Users
-                  </span>
-
+                  <span>All Users</span>
                 </a>
-
 
                 {/* Create New User */}
 
@@ -310,7 +212,6 @@ function Dashboard() {
           transition
         "
                 >
-
                   <UserPlus
                     size={16}
                     className="
@@ -319,25 +220,15 @@ function Dashboard() {
           "
                   />
 
-                  <span>
-                    Create New User
-                  </span>
-
+                  <span>Create New User</span>
                 </a>
-
               </div>
             )}
-
           </div>
-
 
           {/* Products */}
 
-          <SidebarItem
-            icon={<Box size={19} />}
-            label="Products"
-          />
-
+          <SidebarItem icon={<Box size={19} />} label="Products" />
 
           {/* Orders */}
 
@@ -347,63 +238,34 @@ function Dashboard() {
             badge="12"
           />
 
-
           {/* Analytics */}
 
-          <SidebarItem
-            icon={<BarChart3 size={19} />}
-            label="Analytics"
-          />
-
+          <SidebarItem icon={<BarChart3 size={19} />} label="Analytics" />
 
           {/* Messages */}
 
-          <SidebarItem
-            icon={<Mail size={19} />}
-            label="Messages"
-            badge="6"
-          />
-
+          <SidebarItem icon={<Mail size={19} />} label="Messages" badge="6" />
 
           {/* Settings */}
 
-          <SidebarItem
-            icon={<Settings size={19} />}
-            label="Settings"
-          />
-
+          <SidebarItem icon={<Settings size={19} />} label="Settings" />
 
           <div className="my-6 border-t border-slate-800/70" />
-
 
           <p className="px-3 mb-3 text-[11px] uppercase tracking-widest text-slate-500">
             Other
           </p>
 
+          <SidebarItem icon={<CircleHelp size={19} />} label="Help Center" />
 
-          <SidebarItem
-            icon={<CircleHelp size={19} />}
-            label="Help Center"
-          />
+          <SidebarItem icon={<FileText size={19} />} label="Reports" />
 
-          <SidebarItem
-            icon={<FileText size={19} />}
-            label="Reports"
-          />
-
-          <SidebarItem
-            icon={<LogOut size={19} />}
-            label="Logout"
-            danger
-          />
-
+          <SidebarItem icon={<LogOut size={19} />} label="Logout" danger />
         </nav>
-
 
         {/* Sidebar Footer */}
 
         <div className="p-4 border-t border-slate-800/70">
-
           <div
             className="
               p-3
@@ -415,9 +277,7 @@ function Dashboard() {
               border-violet-500/10
             "
           >
-
             <div className="flex items-center gap-3">
-
               <div
                 className="
                   w-9
@@ -429,29 +289,17 @@ function Dashboard() {
                   justify-center
                 "
               >
-                <Zap
-                  size={17}
-                  className="text-violet-400"
-                />
+                <Zap size={17} className="text-violet-400" />
               </div>
 
               <div>
+                <p className="text-xs font-medium text-white">Pro Plan</p>
 
-                <p className="text-xs font-medium text-white">
-                  Pro Plan
-                </p>
-
-                <p className="text-[10px] text-slate-500">
-                  72% used
-                </p>
-
+                <p className="text-[10px] text-slate-500">72% used</p>
               </div>
-
             </div>
 
-
             <div className="mt-3 h-1.5 rounded-full bg-slate-800">
-
               <div
                 className="
                   h-full
@@ -462,23 +310,16 @@ function Dashboard() {
                   to-blue-500
                 "
               />
-
             </div>
-
           </div>
-
         </div>
-
       </aside>
-
 
       {/* =====================================================
           MAIN CONTENT
       ====================================================== */}
 
       <main className="lg:ml-[270px] min-h-screen">
-
-
         {/* =================================================
             TOP NAVBAR
         ================================================== */}
@@ -495,7 +336,6 @@ function Dashboard() {
             border-slate-800/70
           "
         >
-
           <div
             className="
               h-full
@@ -507,11 +347,9 @@ function Dashboard() {
               justify-between
             "
           >
-
             {/* Left */}
 
             <div className="flex items-center gap-4">
-
               {/* Mobile Menu */}
 
               <button
@@ -525,7 +363,6 @@ function Dashboard() {
               >
                 <Menu size={23} />
               </button>
-
 
               {/* Desktop Menu */}
 
@@ -542,11 +379,9 @@ function Dashboard() {
                 <Menu size={21} />
               </button>
 
-
               {/* Search */}
 
               <div className="relative hidden sm:block">
-
                 <Search
                   size={17}
                   className="
@@ -580,16 +415,12 @@ function Dashboard() {
                     focus:ring-violet-500/10
                   "
                 />
-
               </div>
-
             </div>
-
 
             {/* Right */}
 
             <div className="flex items-center gap-2 sm:gap-4">
-
               {/* Mobile Search */}
 
               <button
@@ -603,7 +434,6 @@ function Dashboard() {
                 <Search size={20} />
               </button>
 
-
               {/* Notifications */}
 
               <button
@@ -614,7 +444,6 @@ function Dashboard() {
                   hover:bg-slate-800
                 "
               >
-
                 <Bell size={20} />
 
                 <span
@@ -636,9 +465,7 @@ function Dashboard() {
                 >
                   3
                 </span>
-
               </button>
-
 
               {/* Messages */}
 
@@ -650,7 +477,6 @@ function Dashboard() {
                   hover:bg-slate-800
                 "
               >
-
                 <Mail size={20} />
 
                 <span
@@ -672,16 +498,13 @@ function Dashboard() {
                 >
                   6
                 </span>
-
               </button>
-
 
               {/* =====================================================
     PROFILE DROPDOWN
 ===================================================== */}
 
               <div className="relative hidden sm:block">
-
                 {/* Profile Button */}
 
                 <button
@@ -701,7 +524,6 @@ function Dashboard() {
       pr-2
     "
                 >
-
                   {/* Avatar */}
 
                   <div
@@ -723,21 +545,15 @@ function Dashboard() {
                     VK
                   </div>
 
-
                   {/* User Information */}
 
                   <div className="hidden md:block text-left">
-
                     <p className="text-sm font-semibold text-white">
                       Vishwas Kumar
                     </p>
 
-                    <p className="text-xs text-slate-500">
-                      Administrator
-                    </p>
-
+                    <p className="text-xs text-slate-500">Administrator</p>
                   </div>
-
 
                   {/* Arrow */}
 
@@ -750,9 +566,7 @@ function Dashboard() {
         ${profileOpen ? "rotate-180" : ""}
       `}
                   />
-
                 </button>
-
 
                 {/* =================================================
       DROPDOWN MENU
@@ -760,14 +574,12 @@ function Dashboard() {
 
                 {profileOpen && (
                   <>
-
                     {/* Invisible click area */}
 
                     <div
                       className="fixed inset-0 z-40"
                       onClick={() => setProfileOpen(false)}
                     />
-
 
                     {/* Dropdown */}
 
@@ -786,7 +598,6 @@ function Dashboard() {
           overflow-hidden
         "
                     >
-
                       {/* User Header */}
 
                       <div
@@ -799,9 +610,7 @@ function Dashboard() {
             to-blue-500/5
           "
                       >
-
                         <div className="flex items-center gap-3">
-
                           <div
                             className="
                 w-11
@@ -821,7 +630,6 @@ function Dashboard() {
                           </div>
 
                           <div>
-
                             <p className="text-sm font-semibold text-white">
                               Vishwas Kumar
                             </p>
@@ -829,18 +637,13 @@ function Dashboard() {
                             <p className="text-xs text-slate-500">
                               vishwas@example.com
                             </p>
-
                           </div>
-
                         </div>
-
                       </div>
-
 
                       {/* Menu Items */}
 
                       <div className="p-2">
-
                         {/* Profile */}
 
                         <button
@@ -864,18 +667,10 @@ function Dashboard() {
               transition
             "
                         >
+                          <User size={17} className="text-slate-400" />
 
-                          <User
-                            size={17}
-                            className="text-slate-400"
-                          />
-
-                          <span>
-                            My Profile
-                          </span>
-
+                          <span>My Profile</span>
                         </button>
-
 
                         {/* Billing */}
 
@@ -900,18 +695,10 @@ function Dashboard() {
               transition
             "
                         >
+                          <CreditCard size={17} className="text-slate-400" />
 
-                          <CreditCard
-                            size={17}
-                            className="text-slate-400"
-                          />
-
-                          <span>
-                            Billing
-                          </span>
-
+                          <span>Billing</span>
                         </button>
-
 
                         {/* Settings */}
 
@@ -936,25 +723,15 @@ function Dashboard() {
               transition
             "
                         >
+                          <Settings size={17} className="text-slate-400" />
 
-                          <Settings
-                            size={17}
-                            className="text-slate-400"
-                          />
-
-                          <span>
-                            Settings
-                          </span>
-
+                          <span>Settings</span>
                         </button>
-
                       </div>
-
 
                       {/* Logout */}
 
                       <div className="p-2 border-t border-slate-800">
-
                         <button
                           type="button"
                           onClick={handleLogout}
@@ -972,39 +749,24 @@ function Dashboard() {
               transition
             "
                         >
-
                           <LogOut size={17} />
 
-                          <span>
-                            Logout
-                          </span>
-
+                          <span>Logout</span>
                         </button>
-
                       </div>
-
                     </div>
-
                   </>
-
                 )}
-
               </div>
-
             </div>
-
           </div>
-
         </header>
-
 
         {/* =================================================
             PAGE CONTENT
         ================================================== */}
 
         <div className="p-4 sm:p-6 lg:p-8">
-
-
           {/* Page Header */}
 
           <div
@@ -1018,11 +780,8 @@ function Dashboard() {
               mb-7
             "
           >
-
             <div>
-
               <div className="flex items-center gap-3">
-
                 <div
                   className="
                     w-11
@@ -1034,16 +793,10 @@ function Dashboard() {
                     justify-center
                   "
                 >
-
-                  <LayoutDashboard
-                    size={21}
-                    className="text-violet-400"
-                  />
-
+                  <LayoutDashboard size={21} className="text-violet-400" />
                 </div>
 
                 <div>
-
                   <h2
                     className="
                       text-2xl
@@ -1058,18 +811,13 @@ function Dashboard() {
                   <p className="text-sm text-slate-400 mt-1">
                     Welcome back, Vishwas! Here's what's happening today.
                   </p>
-
                 </div>
-
               </div>
-
             </div>
-
 
             {/* Date */}
 
             <div className="flex items-center gap-3">
-
               <button
                 className="
                   flex
@@ -1085,15 +833,10 @@ function Dashboard() {
                   text-slate-300
                 "
               >
-
                 <Calendar size={16} />
-
                 Aug 26, 2026
-
                 <ChevronDown size={15} />
-
               </button>
-
 
               <div
                 className="
@@ -1109,7 +852,6 @@ function Dashboard() {
                   border-emerald-500/10
                 "
               >
-
                 <span
                   className="
                     w-2
@@ -1120,16 +862,10 @@ function Dashboard() {
                   "
                 />
 
-                <span className="text-xs text-emerald-400">
-                  Live Data
-                </span>
-
+                <span className="text-xs text-emerald-400">Live Data</span>
               </div>
-
             </div>
-
           </div>
-
 
           {/* =================================================
               STAT CARDS
@@ -1145,7 +881,6 @@ function Dashboard() {
               mb-6
             "
           >
-
             <StatCard
               title="Total Users"
               value="12,458"
@@ -1181,9 +916,7 @@ function Dashboard() {
               iconBg="bg-orange-500/15"
               iconColor="text-orange-400"
             />
-
           </div>
-
 
           {/* =================================================
               CHARTS
@@ -1198,8 +931,6 @@ function Dashboard() {
               mb-6
             "
           >
-
-
             {/* Sales Chart */}
 
             <div
@@ -1213,7 +944,6 @@ function Dashboard() {
                 sm:p-6
               "
             >
-
               <div
                 className="
                   flex
@@ -1224,9 +954,7 @@ function Dashboard() {
                   gap-4
                 "
               >
-
                 <div className="flex items-center gap-3">
-
                   <div
                     className="
                       w-10
@@ -1238,26 +966,17 @@ function Dashboard() {
                       justify-center
                     "
                   >
-                    <ChartLine
-                      size={20}
-                      className="text-violet-400"
-                    />
+                    <ChartLine size={20} className="text-violet-400" />
                   </div>
 
                   <div>
-
-                    <h3 className="font-semibold text-white">
-                      Sales Overview
-                    </h3>
+                    <h3 className="font-semibold text-white">Sales Overview</h3>
 
                     <p className="text-xs text-slate-500">
                       Revenue performance
                     </p>
-
                   </div>
-
                 </div>
-
 
                 {/* Period */}
 
@@ -1271,7 +990,6 @@ function Dashboard() {
                     p-1
                   "
                 >
-
                   <button className="px-3 py-1.5 text-xs text-slate-400">
                     7D
                   </button>
@@ -1296,21 +1014,14 @@ function Dashboard() {
                   <button className="px-3 py-1.5 text-xs text-slate-400">
                     1Y
                   </button>
-
                 </div>
-
               </div>
-
 
               {/* Revenue */}
 
               <div className="mt-5">
-
                 <div className="flex items-end gap-3">
-
-                  <h3 className="text-2xl font-bold text-white">
-                    $92,540
-                  </h3>
+                  <h3 className="text-2xl font-bold text-white">$92,540</h3>
 
                   <span
                     className="
@@ -1324,20 +1035,16 @@ function Dashboard() {
                     <TrendingUp size={15} />
                     18.4%
                   </span>
-
                 </div>
 
                 <p className="text-xs text-slate-500 mt-1">
                   vs previous period
                 </p>
-
               </div>
-
 
               {/* Chart */}
 
               <div className="relative h-[280px] mt-6">
-
                 <div
                   className="
                     absolute
@@ -1346,8 +1053,7 @@ function Dashboard() {
                     opacity-60
                   "
                   style={{
-                    backgroundImage:
-                      `
+                    backgroundImage: `
                       linear-gradient(
                         rgba(148,163,184,.08) 1px,
                         transparent 1px
@@ -1362,7 +1068,6 @@ function Dashboard() {
                   }}
                 />
 
-
                 <svg
                   viewBox="0 0 900 300"
                   preserveAspectRatio="none"
@@ -1373,9 +1078,7 @@ function Dashboard() {
                     h-full
                   "
                 >
-
                   <defs>
-
                     <linearGradient
                       id="salesGradient"
                       x1="0"
@@ -1383,23 +1086,11 @@ function Dashboard() {
                       x2="0"
                       y2="1"
                     >
+                      <stop offset="0%" stopColor="#8b5cf6" stopOpacity=".35" />
 
-                      <stop
-                        offset="0%"
-                        stopColor="#8b5cf6"
-                        stopOpacity=".35"
-                      />
-
-                      <stop
-                        offset="100%"
-                        stopColor="#8b5cf6"
-                        stopOpacity="0"
-                      />
-
+                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
                     </linearGradient>
-
                   </defs>
-
 
                   {/* Area */}
 
@@ -1418,7 +1109,6 @@ function Dashboard() {
                     fill="url(#salesGradient)"
                   />
 
-
                   {/* Line */}
 
                   <path
@@ -1436,15 +1126,9 @@ function Dashboard() {
                     strokeWidth="4"
                   />
 
-
                   {/* Points */}
 
-                  <g
-                    fill="#8b5cf6"
-                    stroke="white"
-                    strokeWidth="2"
-                  >
-
+                  <g fill="#8b5cf6" stroke="white" strokeWidth="2">
                     <circle cx="0" cy="230" r="5" />
                     <circle cx="150" cy="175" r="5" />
                     <circle cx="285" cy="185" r="5" />
@@ -1452,13 +1136,9 @@ function Dashboard() {
                     <circle cx="610" cy="75" r="5" />
                     <circle cx="760" cy="80" r="5" />
                     <circle cx="900" cy="15" r="5" />
-
                   </g>
-
                 </svg>
-
               </div>
-
 
               {/* X Axis */}
 
@@ -1471,7 +1151,6 @@ function Dashboard() {
                   mt-2
                 "
               >
-
                 <span>Aug 20</span>
                 <span>Aug 21</span>
                 <span>Aug 22</span>
@@ -1479,11 +1158,8 @@ function Dashboard() {
                 <span>Aug 24</span>
                 <span>Aug 25</span>
                 <span>Aug 26</span>
-
               </div>
-
             </div>
-
 
             {/* User Distribution */}
 
@@ -1497,11 +1173,8 @@ function Dashboard() {
                 sm:p-6
               "
             >
-
               <div className="flex justify-between">
-
                 <div>
-
                   <h3 className="font-semibold text-white">
                     User Distribution
                   </h3>
@@ -1509,28 +1182,19 @@ function Dashboard() {
                   <p className="text-xs text-slate-500 mt-1">
                     Users by category
                   </p>
-
                 </div>
 
-                <MoreVertical
-                  size={18}
-                  className="text-slate-500"
-                />
-
+                <MoreVertical size={18} className="text-slate-500" />
               </div>
-
 
               {/* Donut */}
 
               <div className="flex justify-center my-8">
-
                 <div className="relative w-44 h-44">
-
                   <svg
                     className="w-full h-full -rotate-90"
                     viewBox="0 0 100 100"
                   >
-
                     <circle
                       cx="50"
                       cy="50"
@@ -1571,9 +1235,7 @@ function Dashboard() {
                       strokeDasharray="59.7 238.7"
                       strokeDashoffset="-179"
                     />
-
                   </svg>
-
 
                   <div
                     className="
@@ -1585,26 +1247,18 @@ function Dashboard() {
                       justify-center
                     "
                   >
-
                     <span className="text-2xl font-bold text-white">
                       12,458
                     </span>
 
-                    <span className="text-xs text-slate-500">
-                      Total Users
-                    </span>
-
+                    <span className="text-xs text-slate-500">Total Users</span>
                   </div>
-
                 </div>
-
               </div>
-
 
               {/* Legend */}
 
               <div className="space-y-4">
-
                 <Legend
                   color="bg-violet-500"
                   title="New Users"
@@ -1622,13 +1276,9 @@ function Dashboard() {
                   title="Premium"
                   percentage="25%"
                 />
-
               </div>
-
             </div>
-
           </div>
-
 
           {/* =================================================
               BOTTOM CARDS
@@ -1642,8 +1292,6 @@ function Dashboard() {
               gap-5
             "
           >
-
-
             {/* Recent Users */}
 
             <div
@@ -1655,34 +1303,21 @@ function Dashboard() {
                 p-5
               "
             >
-
               <div className="flex justify-between mb-5">
-
                 <div>
-
-                  <h3 className="font-semibold text-white">
-                    Recent Users
-                  </h3>
+                  <h3 className="font-semibold text-white">Recent Users</h3>
 
                   <p className="text-xs text-slate-500 mt-1">
                     Latest registered users
                   </p>
-
                 </div>
 
-                <a
-                  href="#"
-                  className="text-xs text-violet-400"
-                >
+                <a href="#" className="text-xs text-violet-400">
                   View All
                 </a>
-
               </div>
 
-
               <div className="space-y-4">
-
-
                 <UserRow
                   initials="VK"
                   name="Vishwas Kumar"
@@ -1701,11 +1336,8 @@ function Dashboard() {
                   email="rohit@example.com"
                   inactive
                 />
-
               </div>
-
             </div>
-
 
             {/* Recent Orders */}
 
@@ -1718,33 +1350,21 @@ function Dashboard() {
                 p-5
               "
             >
-
               <div className="flex justify-between mb-5">
-
                 <div>
-
-                  <h3 className="font-semibold text-white">
-                    Recent Orders
-                  </h3>
+                  <h3 className="font-semibold text-white">Recent Orders</h3>
 
                   <p className="text-xs text-slate-500 mt-1">
                     Latest transactions
                   </p>
-
                 </div>
 
-                <a
-                  href="#"
-                  className="text-xs text-violet-400"
-                >
+                <a href="#" className="text-xs text-violet-400">
                   View All
                 </a>
-
               </div>
 
-
               <div className="space-y-1">
-
                 <OrderRow
                   id="#10248"
                   customer="Priya Sharma"
@@ -1766,11 +1386,8 @@ function Dashboard() {
                   status="Pending"
                   pending
                 />
-
               </div>
-
             </div>
-
 
             {/* Quick Actions */}
 
@@ -1783,31 +1400,19 @@ function Dashboard() {
                 p-5
               "
             >
-
               <div className="flex justify-between mb-5">
-
                 <div>
-
-                  <h3 className="font-semibold text-white">
-                    Quick Actions
-                  </h3>
+                  <h3 className="font-semibold text-white">Quick Actions</h3>
 
                   <p className="text-xs text-slate-500 mt-1">
                     Frequently used actions
                   </p>
-
                 </div>
 
-                <Zap
-                  size={18}
-                  className="text-violet-400"
-                />
-
+                <Zap size={18} className="text-violet-400" />
               </div>
 
-
               <div className="grid grid-cols-2 gap-3">
-
                 <ActionButton
                   icon={<UserPlus size={20} />}
                   title="Add User"
@@ -1831,13 +1436,9 @@ function Dashboard() {
                   title="View Reports"
                   color="fuchsia"
                 />
-
               </div>
-
             </div>
-
           </div>
-
 
           {/* =================================================
               FOOTER
@@ -1857,69 +1458,52 @@ function Dashboard() {
               gap-3
             "
           >
-
             <p className="text-xs text-slate-600">
               © 2026 CypherTech Admin Panel. All rights reserved.
             </p>
 
             <div className="flex items-center gap-5">
-
-              <a
-                href="#"
-                className="text-xs text-slate-500 hover:text-white"
-              >
+              <a href="#" className="text-xs text-slate-500 hover:text-white">
                 Privacy Policy
               </a>
 
-              <a
-                href="#"
-                className="text-xs text-slate-500 hover:text-white"
-              >
+              <a href="#" className="text-xs text-slate-500 hover:text-white">
                 Terms of Service
               </a>
 
-              <a
-                href="#"
-                className="text-xs text-slate-500 hover:text-white"
-              >
+              <a href="#" className="text-xs text-slate-500 hover:text-white">
                 Help
               </a>
-
             </div>
-
           </footer>
-
         </div>
-
       </main>
-
     </div>
-  )
+  );
 
-
-/* =========================================================
+  /* =========================================================
    SIDEBAR ITEM
 ========================================================= */
 
-function SidebarItem({
-  icon,
-  label,
-  active = false,
-  arrow = false,
-  badge,
-  danger = false,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  arrow?: boolean;
-  badge?: string;
-  danger?: boolean;
-}) {
-  return (
-    <a
-      href="#"
-      className={`
+  function SidebarItem({
+    icon,
+    label,
+    active = false,
+    arrow = false,
+    badge,
+    danger = false,
+  }: {
+    icon: React.ReactNode;
+    label: string;
+    active?: boolean;
+    arrow?: boolean;
+    badge?: string;
+    danger?: boolean;
+  }) {
+    return (
+      <a
+        href="#"
+        className={`
         flex
         items-center
         justify-between
@@ -1928,29 +1512,24 @@ function SidebarItem({
         rounded-xl
         mb-2
         transition
-        ${active
-          ? "bg-gradient-to-r from-violet-600/40 to-indigo-600/20 text-white shadow-[0_0_25px_rgba(124,58,237,.15)]"
-          : danger
-            ? "text-red-400 hover:bg-red-500/10"
-            : "text-slate-400 hover:bg-violet-500/10 hover:text-white"
+        ${
+          active
+            ? "bg-gradient-to-r from-violet-600/40 to-indigo-600/20 text-white shadow-[0_0_25px_rgba(124,58,237,.15)]"
+            : danger
+              ? "text-red-400 hover:bg-red-500/10"
+              : "text-slate-400 hover:bg-violet-500/10 hover:text-white"
         }
       `}
-    >
+      >
+        <div className="flex items-center gap-3">
+          {icon}
 
-      <div className="flex items-center gap-3">
+          <span className="text-sm">{label}</span>
+        </div>
 
-        {icon}
-
-        <span className="text-sm">
-          {label}
-        </span>
-
-      </div>
-
-
-      {badge && (
-        <span
-          className="
+        {badge && (
+          <span
+            className="
             text-[10px]
             font-semibold
             bg-violet-600/20
@@ -1959,46 +1538,38 @@ function SidebarItem({
             py-1
             rounded-full
           "
-        >
-          {badge}
-        </span>
-      )}
+          >
+            {badge}
+          </span>
+        )}
 
+        {arrow && <ChevronRight size={15} className="text-slate-500" />}
+      </a>
+    );
+  }
 
-      {arrow && (
-        <ChevronRight
-          size={15}
-          className="text-slate-500"
-        />
-      )}
-
-    </a>
-  );
-}
-
-
-/* =========================================================
+  /* =========================================================
    STAT CARD
 ========================================================= */
 
-function StatCard({
-  title,
-  value,
-  percentage,
-  icon,
-  iconBg,
-  iconColor,
-}: {
-  title: string;
-  value: string;
-  percentage: string;
-  icon: React.ReactNode;
-  iconBg: string;
-  iconColor: string;
-}) {
-  return (
-    <div
-      className="
+  function StatCard({
+    title,
+    value,
+    percentage,
+    icon,
+    iconBg,
+    iconColor,
+  }: {
+    title: string;
+    value: string;
+    percentage: string;
+    icon: React.ReactNode;
+    iconBg: string;
+    iconColor: string;
+  }) {
+    return (
+      <div
+        className="
         group
         bg-[#0e1122]
         border
@@ -2010,12 +1581,10 @@ function StatCard({
         hover:-translate-y-1
         hover:border-violet-500/30
       "
-    >
-
-      <div className="flex items-start justify-between">
-
-        <div
-          className={`
+      >
+        <div className="flex items-start justify-between">
+          <div
+            className={`
             w-11
             h-11
             rounded-xl
@@ -2025,119 +1594,95 @@ function StatCard({
             justify-center
             ${iconColor}
           `}
-        >
-          {icon}
-        </div>
+          >
+            {icon}
+          </div>
 
-        <MoreVertical
-          size={19}
-          className="
+          <MoreVertical
+            size={19}
+            className="
             text-slate-500
             group-hover:text-white
           "
-        />
+          />
+        </div>
 
-      </div>
+        <p className="text-sm text-slate-400 mt-4">{title}</p>
 
+        <h3 className="text-2xl font-bold text-white mt-1">{value}</h3>
 
-      <p className="text-sm text-slate-400 mt-4">
-        {title}
-      </p>
-
-      <h3 className="text-2xl font-bold text-white mt-1">
-        {value}
-      </h3>
-
-
-      <div className="flex items-center gap-2 mt-3">
-
-        <span
-          className="
+        <div className="flex items-center gap-2 mt-3">
+          <span
+            className="
             flex
             items-center
             gap-1
             text-xs
             text-emerald-400
           "
-        >
+          >
+            <TrendingUp size={12} />
 
-          <TrendingUp size={12} />
+            {percentage}
+          </span>
 
-          {percentage}
-
-        </span>
-
-        <span className="text-xs text-slate-500">
-          vs last month
-        </span>
-
+          <span className="text-xs text-slate-500">vs last month</span>
+        </div>
       </div>
+    );
+  }
 
-    </div>
-  );
-}
-
-
-/* =========================================================
+  /* =========================================================
    LEGEND
 ========================================================= */
 
-function Legend({
-  color,
-  title,
-  percentage,
-}: {
-  color: string;
-  title: string;
-  percentage: string;
-}) {
-  return (
-    <div className="flex items-center justify-between">
-
-      <div className="flex items-center gap-2">
-
-        <span
-          className={`
+  function Legend({
+    color,
+    title,
+    percentage,
+  }: {
+    color: string;
+    title: string;
+    percentage: string;
+  }) {
+    return (
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span
+            className={`
             w-3
             h-3
             rounded-full
             ${color}
           `}
-        />
+          />
 
-        <span className="text-sm text-slate-300">
-          {title}
-        </span>
+          <span className="text-sm text-slate-300">{title}</span>
+        </div>
 
+        <span className="text-sm font-semibold text-white">{percentage}</span>
       </div>
+    );
+  }
 
-      <span className="text-sm font-semibold text-white">
-        {percentage}
-      </span>
-
-    </div>
-  );
-}
-
-
-/* =========================================================
+  /* =========================================================
    USER ROW
 ========================================================= */
 
-function UserRow({
-  initials,
-  name,
-  email,
-  inactive = false,
-}: {
-  initials: string;
-  name: string;
-  email: string;
-  inactive?: boolean;
-}) {
-  return (
-    <div
-      className="
+  function UserRow({
+    initials,
+    name,
+    email,
+    inactive = false,
+  }: {
+    initials: string;
+    name: string;
+    email: string;
+    inactive?: boolean;
+  }) {
+    return (
+      <div
+        className="
         flex
         items-center
         justify-between
@@ -2146,12 +1691,10 @@ function UserRow({
         border-slate-800/70
         last:border-0
       "
-    >
-
-      <div className="flex items-center gap-3">
-
-        <div
-          className="
+      >
+        <div className="flex items-center gap-3">
+          <div
+            className="
             w-9
             h-9
             rounded-full
@@ -2165,65 +1708,56 @@ function UserRow({
             font-bold
             text-violet-300
           "
-        >
-          {initials}
+          >
+            {initials}
+          </div>
+
+          <div>
+            <p className="text-sm text-white">{name}</p>
+
+            <p className="text-[10px] text-slate-500">{email}</p>
+          </div>
         </div>
 
-        <div>
-
-          <p className="text-sm text-white">
-            {name}
-          </p>
-
-          <p className="text-[10px] text-slate-500">
-            {email}
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <span
-        className={`
+        <span
+          className={`
           text-[10px]
           px-2
           py-1
           rounded-full
-          ${inactive
-            ? "bg-slate-500/10 text-slate-400"
-            : "bg-emerald-500/10 text-emerald-400"
+          ${
+            inactive
+              ? "bg-slate-500/10 text-slate-400"
+              : "bg-emerald-500/10 text-emerald-400"
           }
         `}
-      >
-        {inactive ? "Inactive" : "Active"}
-      </span>
+        >
+          {inactive ? "Inactive" : "Active"}
+        </span>
+      </div>
+    );
+  }
 
-    </div>
-  );
-}
-
-
-/* =========================================================
+  /* =========================================================
    ORDER ROW
 ========================================================= */
 
-function OrderRow({
-  id,
-  customer,
-  amount,
-  status,
-  pending = false,
-}: {
-  id: string;
-  customer: string;
-  amount: string;
-  status: string;
-  pending?: boolean;
-}) {
-  return (
-    <div
-      className="
+  function OrderRow({
+    id,
+    customer,
+    amount,
+    status,
+    pending = false,
+  }: {
+    id: string;
+    customer: string;
+    amount: string;
+    status: string;
+    pending?: boolean;
+  }) {
+    return (
+      <div
+        className="
         flex
         items-center
         justify-between
@@ -2232,99 +1766,86 @@ function OrderRow({
         border-slate-800/70
         last:border-0
       "
-    >
+      >
+        <div>
+          <p className="text-xs text-violet-400">{id}</p>
 
-      <div>
+          <p className="text-sm text-white mt-1">{customer}</p>
+        </div>
 
-        <p className="text-xs text-violet-400">
-          {id}
-        </p>
+        <div className="text-right">
+          <p className="text-sm font-semibold text-white">{amount}</p>
 
-        <p className="text-sm text-white mt-1">
-          {customer}
-        </p>
-
-      </div>
-
-
-      <div className="text-right">
-
-        <p className="text-sm font-semibold text-white">
-          {amount}
-        </p>
-
-        <span
-          className={`
+          <span
+            className={`
             inline-flex
             mt-1
             px-2
             py-0.5
             rounded-full
             text-[9px]
-            ${pending
-              ? "bg-orange-500/10 text-orange-400"
-              : "bg-emerald-500/10 text-emerald-400"
+            ${
+              pending
+                ? "bg-orange-500/10 text-orange-400"
+                : "bg-emerald-500/10 text-emerald-400"
             }
           `}
-        >
-          {status}
-        </span>
-
+          >
+            {status}
+          </span>
+        </div>
       </div>
+    );
+  }
 
-    </div>
-  );
-}
-
-
-/* =========================================================
+  /* =========================================================
    QUICK ACTION BUTTON
 ========================================================= */
 
-function ActionButton({
-  icon,
-  title,
-  color,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  color: "violet" | "emerald" | "blue" | "fuchsia";
-}) {
-  const colors = {
-    violet: {
-      bg: "bg-violet-500/10",
-      hover: "hover:bg-violet-500/20",
-      icon: "bg-violet-500/15",
-      text: "text-violet-400",
-    },
+  function ActionButton({
+    icon,
+    title,
+    color,
+  }: {
+    icon: React.ReactNode;
+    title: string;
+    color: "violet" | "emerald" | "blue" | "fuchsia";
+  }) {
+    const colors = {
+      violet: {
+        bg: "bg-violet-500/10",
+        hover: "hover:bg-violet-500/20",
+        icon: "bg-violet-500/15",
+        text: "text-violet-400",
+      },
 
-    emerald: {
-      bg: "bg-emerald-500/10",
-      hover: "hover:bg-emerald-500/20",
-      icon: "bg-emerald-500/15",
-      text: "text-emerald-400",
-    },
+      emerald: {
+        bg: "bg-emerald-500/10",
+        hover: "hover:bg-emerald-500/20",
+        icon: "bg-emerald-500/15",
+        text: "text-emerald-400",
+      },
 
-    blue: {
-      bg: "bg-blue-500/10",
-      hover: "hover:bg-blue-500/20",
-      icon: "bg-blue-500/15",
-      text: "text-blue-400",
-    },
+      blue: {
+        bg: "bg-blue-500/10",
+        hover: "hover:bg-blue-500/20",
+        icon: "bg-blue-500/15",
+        text: "text-blue-400",
+      },
 
-    fuchsia: {
-      bg: "bg-fuchsia-500/10",
-      hover: "hover:bg-fuchsia-500/20",
-      icon: "bg-fuchsia-500/15",
-      text: "text-fuchsia-400",
-    },
-  };
+      fuchsia: {
+        bg: "bg-fuchsia-500/10",
+        hover: "hover:bg-fuchsia-500/20",
+        icon: "bg-fuchsia-500/15",
+        text: "text-fuchsia-400",
+      },
+    };
 
-  const c = colors[color];
+    const c = colors[color];
 
-  return (
-    <button
-      className={`
+    return (
+      <button
+        className={`
         p-4
         rounded-xl
         border
@@ -2333,10 +1854,9 @@ function ActionButton({
         ${c.hover}
         transition
       `}
-    >
-
-      <div
-        className={`
+      >
+        <div
+          className={`
           w-10
           h-10
           rounded-lg
@@ -2347,18 +1867,14 @@ function ActionButton({
           justify-center
           ${c.text}
         `}
-      >
-        {icon}
-      </div>
+        >
+          {icon}
+        </div>
 
-      <p className="text-xs text-white mt-3">
-        {title}
-      </p>
-
-    </button>
-  );
-}
+        <p className="text-xs text-white mt-3">{title}</p>
+      </button>
+    );
+  }
 }
 
-
-export default Dashboard
+export default Dashboard;

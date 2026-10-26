@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import type { RowDataPacket } from "mysql2";
 import pool from "@/app/config/db";
-import { createToken } from "@/app/lib/auth";
+import { createToken, getSessionMaxAge } from "@/app/lib/auth";
 import { googleConfig, googleCookie, googleCookieOptions, googleFailure } from "@/app/lib/google-auth";
 
 export const runtime = "nodejs";
@@ -100,7 +100,8 @@ export async function GET(request: NextRequest) {
     if (user.status !== 1) return fail("inactive");
     if (user.type !== "admin" && user.type !== "user") return fail("account");
 
-    const token = await createToken({ id: user.id, email: user.email, type: user.type });
+    const rememberMe = transaction.rememberMe === true;
+    const token = await createToken({ id: user.id, email: user.email, type: user.type }, rememberMe);
     const response = NextResponse.redirect(new URL(`/${user.type}/dashboard`, config.origin));
     response.headers.set("Cache-Control", "no-store");
     response.cookies.set("access_token", token, {
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: process.env.NEXT_PUBLIC_SUB_FOLDER || "/",
-      maxAge: 60 * 60 * 24,
+      maxAge: getSessionMaxAge(rememberMe),
     });
     response.cookies.set(googleCookie, "", { ...googleCookieOptions, maxAge: 0 });
     return response;

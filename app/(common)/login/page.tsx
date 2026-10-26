@@ -2,6 +2,7 @@
 
 import { FormEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -28,6 +29,7 @@ function LoginForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -47,6 +49,7 @@ function LoginForm() {
         body: JSON.stringify({
           email,
           password,
+          rememberMe,
         }),
       });
 
@@ -133,7 +136,21 @@ function LoginForm() {
                 autoComplete="current-password"
                 className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
+              <Link href="/forgot-password" className="mt-3 block text-right text-sm font-medium text-blue-600 hover:underline">
+                Forgot password?
+              </Link>
             </div>
+            <label className="mb-6 flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+              <input
+                type="checkbox"
+                name="rememberMe"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={loading}
+                className="h-4 w-4 rounded border-slate-300 accent-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              />
+              Remember me for 7 days
+            </label>
             {/* Login button */}
             <button
               type="submit"
@@ -149,7 +166,7 @@ function LoginForm() {
             <div className="h-px flex-1 bg-slate-200" />
           </div>
           <a
-            href="/api/auth/google"
+            href={rememberMe ? "/api/auth/google?rememberMe=true" : "/api/auth/google"}
             className="flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             Sign in with Google
