@@ -73,6 +73,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (user.type !== "admin" && user.type !== "user") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Your account is not allowed to sign in. Please contact the administrator.",
+        },
+        { status: 403 }
+      );
+    }
+
     // Create JWT
     const token = await createToken({
       id: user.id,

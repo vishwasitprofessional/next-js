@@ -40,8 +40,9 @@ function LoginForm() {
     setError("");
     setLoading(true);
 
+    const url=`${process.env.NEXT_PUBLIC_SUB_FOLDER}/api/auth/login`;
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,8 +61,17 @@ function LoginForm() {
         return;
       }
 
-      router.push("/" + result.user.type + "/dashboard");
-      // Login successful
+      const type = result.user?.type;
+
+      if (type !== "admin" && type !== "user") {
+        setError("Your account is not allowed to sign in. Please contact the administrator.");
+        return;
+      }
+
+      router.replace(`/${type}/dashboard`);
+      // The dashboard is server-rendered from the auth cookie, so refresh the
+      // router cache after the cookie has been set by the login response.
+      router.refresh();
 
     } catch (error) {
       console.error("Login error:", error);
